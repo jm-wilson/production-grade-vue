@@ -1,34 +1,24 @@
-<template>
-  <!-- Challenge: Rewrite the following HTML using a render function -->
-  <h1 v-if="level === 1">
-    Hello Frontend Masters!
-  </h1>
-  <h2 v-else-if="level === 2">
-    Hello Frontend Masters!
-  </h2>
-  <h3 v-else-if="level === 3">
-    Hello Frontend Masters!
-  </h3>
-  <h4 v-else-if="level === 4">
-    Hello Frontend Masters!
-  </h4>
-  <h5 v-else-if="level === 5">
-    Hello Frontend Masters!
-  </h5>
-  <h6 v-else-if="level === 6">
-    Hello Frontend Masters!
-  </h6>
-</template>
-
 <script>
+import { h } from 'vue';
+
 export default {
   props: {
     level: {
       type: Number,
-      default: 1
+      default: 1,
+    },
+  },
+  render() {
+    const { level } = this;
+
+    if (level < 1 || level > 6) {
+      console.warn('DynamicHeading was used with a level outside of 1-6');
+      return;
     }
-  }
-}
+
+    return h(`h${level}`, 'Hello Frontend Masters!');
+  },
+};
 </script>
 
 <style></style>
