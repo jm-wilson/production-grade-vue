@@ -1,8 +1,14 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <div class="my-counters">
+      Count: {{ counter }}
+      <button @click="incrementBy1">Increment</button>
+      <input @submit="incrementByAmount" type="number" v-model="amount" min="1" />
+      <button @click="incrementByAmount">Increment by input value</button>
+    </div>
     <p>
-      For a guide and recipes on how to configure / customize this project,<br>
+      For a guide and recipes on how to configure / customize this project,<br />
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
@@ -31,12 +37,19 @@
 </template>
 
 <script>
+import { useCounter } from '../composables/useCounter';
+
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
-  }
-}
+    msg: String,
+  },
+  setup() {
+    const { counter, incrementBy1, amount, incrementByAmount } = useCounter();
+
+    return { counter, incrementBy1, amount, incrementByAmount };
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -54,5 +67,12 @@ li {
 }
 a {
   color: #42b983;
+}
+.my-counters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  max-width: 400px;
+  margin-inline: auto;
 }
 </style>
